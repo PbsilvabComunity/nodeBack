@@ -11,7 +11,7 @@ router.post('/login',         login);
 function login(req, res, next) {
     Controller.login(req.body.username, req.body.password)
     .then((token)=>{
-        response.sucsess(req, res, token, 200);
+        response.success(req, res, token, 200);
     })
     .catch(next);
 }

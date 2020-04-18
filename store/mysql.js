@@ -75,14 +75,16 @@ function update(table, data) {
 
 
 
-function upsert(table, data) {
-
-    if (data && data.id) {
-        return update(table, data)
-    } else {
+async function upsert(table, data) {
+    
+    let exists = await query(table, {id: data.id});
+    
+    if (!exists) {
         return insert(table, data)
     }
 
+    return update(table, data)
+    
 }
 
 function query(table, q, join) {

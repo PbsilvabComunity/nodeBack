@@ -31,15 +31,17 @@ function createRemoteDB(host, port) {
         if(data){
             body = data;
         }
-
         return new Promise((resolve, reject) => {
+            
+            console.log(body);
+
             request({
-                method,
+                method:method,
                 headers:{
                     'content-type': 'application/json'
                 },
-                url,
-                body
+                url:url,
+                body:body
             }, (err, req, body)=>{
 
                 if(err) {

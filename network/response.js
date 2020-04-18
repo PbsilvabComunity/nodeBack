@@ -1,7 +1,7 @@
-exports.sucsess = function (req, res, message, status){
+exports.success = function (req, res, message, status){
 
     let StatusCode = status || 200;
-    let StatusMessaage = message || '';
+    let StatusMessaage = message || [];
 
     res.status(StatusCode).send({
         error:false,
