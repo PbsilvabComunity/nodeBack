@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get('/',          list);
 router.get('/find/:id',  find);
+router.get('/search/:cuit',  importAfipInfo);
 router.post('/',         upsert);
 router.put('/',          upsert);
 
@@ -27,6 +28,14 @@ function find(req, res, next) {
 
 function upsert(req, res, next) {
     Controller.upsert(req.body)
+    .then( (resp) =>{
+        response.success(req, res, resp, 200);
+    })
+    .catch(next);
+}
+
+function importAfipInfo(req, res, next) {
+    Controller.search_info(req.params.cuit)
     .then( (resp) =>{
         response.success(req, res, resp, 200);
     })

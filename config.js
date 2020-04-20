@@ -16,15 +16,16 @@ module.exports = {
     afip_SVR: {
         port: process.env.API_PORT || 3005,
         cuit: process.env.AFIP_CUIT || '20959582794',
+        host: process.env.AFIP_SVR_HOST  || 'localhost'
     },
     jwt: {
         secret: process.env.JWT_SECRET || 'secret!'
     },
     mysql: {
         host: process.env.MYSQL_HOST || 'localhost',
-        user: process.env.MYSQL_USER || 'root',
-        password: process.env.MYSQL_PASS || 'root',
-        database: process.env.MYSQL_DB || 'ecombilling',
+        user: process.env.MYSQL_USER || 'admin',
+        password: process.env.MYSQL_PASS || 'Salvador.014',
+        database: process.env.MYSQL_DB || 'ecom',
     },
     mysql_service: {
         port: process.env.MYSQL_SVR_PORT  || 3001,

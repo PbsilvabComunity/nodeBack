@@ -9,12 +9,10 @@ const errors     = require('../network/errors');
 
 app.use(bodyParser.json());
 
-
-app.use('/api/afip', afipSrv);
-
+app.use('/', afipSrv);
 
 app.use(errors);
 
 app.listen(config.afip_SVR.port, function(){
-    console.log('Servicio de afip escuchando en puerto ', config.afip_SVR.port );
+    console.log('Servicio de AFIP escuchando en puerto ', config.afip_SVR.port );
 });

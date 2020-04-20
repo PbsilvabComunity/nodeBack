@@ -1,8 +1,9 @@
 const nanoid = require('nanoid/async'); 
+const billingInfo = require('../billingInfo/index');
 
 module.exports = function(injectedStore){
     let store = injectedStore;
-    const TABLE = 'clients'
+    const TABLE = 'contacts'
 
     if(!store){
         store = require('../../../store/mysql');
@@ -20,7 +21,7 @@ module.exports = function(injectedStore){
     async function upsert(body){
        
         const client = {
-            name: body.name
+            company_name: body.company_name
         }
 
         if (body.id){
@@ -28,8 +29,31 @@ module.exports = function(injectedStore){
         } else {
             client.id = await nanoid();
         }
+
+        let legalInfo = null;
+
+        if (body.cuit) {
+            
+             legalInfo = await billingInfo.search_info(body.cuit);
         
-        return store.upsert(TABLE, client);
+            if (legalInfo) {
+                legalInfo.contact_id = client.id;
+            }
+            if (legalInfo.name) {
+                client.name = legalInfo.name;
+            }
+            if (legalInfo.last_name) {
+                client.last_name = legalInfo.last_name;
+            }    
+        }
+
+        let contact_upsert = await store.upsert(TABLE, client);
+
+        if (legalInfo) {
+            billingInfo.upsert(legalInfo);
+        }
+        
+        return contact_upsert
     }
 
     async function clientBillingId(id) {
